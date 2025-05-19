@@ -1,12 +1,16 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
-const PortfolioTable = dynamic(() => import('@/components/PortfolioTable'), { ssr: false });
+const PortfolioTable = dynamic(() => import('@/components/PortfolioTable'), {
+  loading: () => <div>Loading portfolio data...</div>
+});
 
 export default function PortfolioPage() {
   return (
-    <main className="max-w-6xl mx-auto py-8">
-      <h1 className="text-2xl font-semibold mb-4">My Portfolio Dashboard</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Portfolio Overview</h1>
       <PortfolioTable />
-    </main>
+    </div>
   );
 }
