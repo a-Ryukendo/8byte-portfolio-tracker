@@ -6,9 +6,6 @@ const nextConfig = {
     domains: ['www.google.com', 'finance.yahoo.com'],
     unoptimized: true
   },
-  experimental: {
-    serverActions: true
-  },
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -16,6 +13,20 @@ const nextConfig = {
       net: false,
       tls: false,
     };
+    
+    // Add support for private class fields
+    config.module.rules.push({
+      test: /\.js$/,
+      include: /node_modules\/undici/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-proposal-private-methods', '@babel/plugin-proposal-class-properties']
+        }
+      }
+    });
+    
     return config;
   },
 };
